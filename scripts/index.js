@@ -9,11 +9,14 @@ import {Fibonacci} from "./classes/fibonacci.class.js";
         const NumberInputInstance = new NumberInput()
         const FibonacciInstance = new Fibonacci()
         number_input.addEventListener('change', (event) => {
-            util.handleChangeNumberInput(Number(event.target.value), NumberInputInstance)
+            util.handleChangeNumberInput(Number(Number(event.target.value).toFixed()), NumberInputInstance)
+            if (Number(event.target.value) !== Math.ceil(Number(event.target.value))) {
+                number_input.value = NumberInputInstance.Range
+            }
         })
         number_input_submit.addEventListener('click', (_event) => {
             if (NumberInputInstance.Range <= 0) {
-                alert("Range must be not empty and  larger than 0")
+                alert("Range must be not empty and larger than 0")
                 number_input.value = ''
                 number_input.focus()
             }
