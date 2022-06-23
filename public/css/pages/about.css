@@ -1,0 +1,15 @@
+#about :is(.heading, .description) {
+    text-align: center;
+}
+
+#about :is(.steps, .notes) {
+    list-style: square inside;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+#about .notes .note_special:hover {
+    cursor: pointer;
+    color: var(--secondary-color);
+}

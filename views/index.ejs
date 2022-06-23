@@ -8,7 +8,12 @@
         <%- include('./partials/header')%>
     </header>
     <main class="container">
-        <%- include('./pages/home')%>
+        <%if (path === '/') {%>
+            <%- include('./pages/home')%>
+        <%}%>
+        <%if (path === '/about') {%>
+            <%- include('./pages/about')%>
+        <%}%>
     </main>
     <footer>
         <%- include('./partials/footer')%>

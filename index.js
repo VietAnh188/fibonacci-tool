@@ -3,6 +3,8 @@ const http = require('http')
 const dotenv = require('dotenv')
 const path = require('path')
 dotenv.config()
+const homeRouter = require('./routes/home.router')
+const aboutRouter = require('./routes/about.router')
 
 ;(() => {
     const app = express()
@@ -13,9 +15,8 @@ dotenv.config()
     app.use(express.static(path.join(__dirname, "public")))
     app.use("/scripts", express.static(path.join(__dirname, "scripts")))
 
-    app.get('/', (req, res) => {
-        return res.render("index")
-    })
+    app.use(homeRouter.router)
+    app.use(aboutRouter.router)
 
     const port = process.env.PORT || 1808
 
