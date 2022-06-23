@@ -1,0 +1,51 @@
+:root {
+    --primary-color: #f5d3ff;
+}
+
+.container {
+    padding: 10px 40px;
+}
+
+.wrapper {
+    padding: 20px;
+}
+
+.container-row {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.row {
+    display: flex;
+    column-gap: 20px;
+}
+
+.column-one {
+    flex: 1;
+}
+
+.column-two {
+    flex: 2;
+}
+
+.shadow-box {
+    box-shadow: 0 5px 20px 5px #dcdcdc;
+}
+
+.border-radius {
+    border-radius: 10px;
+}
+
+.btn {
+    padding: 10px 20px;
+    font-weight: bold;
+    transition: transform 0.25s linear;
+    background-color: var(--primary-color);
+    border: none;
+}
+
+.btn:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}

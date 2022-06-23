@@ -1,0 +1,5 @@
+export const number_input = document.querySelector('#home .feature .number-input')
+export const number_input_submit = document.querySelector('#home .feature .number-input-submit')
+export const number_input_clear = document.querySelector('#home .feature .number-input-clear')
+export const fibonacciResult = document.querySelector('#home .result ul')
+export const eachFibonacci = document.querySelector('#home .fibonacci-number span')

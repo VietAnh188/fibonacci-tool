@@ -1,0 +1,46 @@
+#home .feature {
+    align-items: center;
+}
+
+#home .feature .number-input {
+    padding: 5px 10px;
+    font-size: 20px;
+    border: 1px solid var(--primary-color);
+}
+
+#home .feature .number-input:focus {
+    outline-color: var(--primary-color);
+}
+
+#home .fibonacci-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#home .fibonacci-number span {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#home .result {
+    max-height: 500px;
+    overflow-x: scroll;
+}
+
+#home .result ul {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+#home .result .result-item {
+    padding: 10px;
+    transition: transform 0.25s linear, background-color 0.25s linear;
+}
+
+#home .result .result-item:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+    background-color: var(--primary-color);
+}
