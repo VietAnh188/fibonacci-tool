@@ -9,7 +9,7 @@
     "start": "node index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "le viet anh",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.0.1",
