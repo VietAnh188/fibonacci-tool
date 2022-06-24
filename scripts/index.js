@@ -12,7 +12,6 @@ import {Fibonacci} from "./classes/fibonacci.class.js";
             util.handleChangeNumberInput(Number(Number(event.target.value).toFixed()), NumberInputInstance)
             if (Number(event.target.value) !== Number(Number(event.target.value).toFixed())) {
                 number_input.value = NumberInputInstance.Range
-                console.log('false')
             }
         })
         number_input_submit.addEventListener('click', (_event) => {
