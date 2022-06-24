@@ -3,3 +3,4 @@ export const number_input_submit = document.querySelector('#home .feature .numbe
 export const number_input_clear = document.querySelector('#home .feature .number-input-clear')
 export const fibonacciResult = document.querySelector('#home .result ul')
 export const eachFibonacci = document.querySelector('#home .fibonacci-number span')
+export const number_input_form = document.querySelector('#home .feature form')
