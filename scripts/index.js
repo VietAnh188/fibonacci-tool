@@ -1,47 +1,40 @@
-import {number_input, number_input_clear, number_input_submit, fibonacciResult, eachFibonacci, number_input_form} from "./constants.js";
+import {number_input, number_input_clear, number_input_submit, fibonacciResult, number_input_form, currentFibonacci} from "./constants.js";
 import {NumberInput} from "./classes/numberInput.class.js";
-import {Util} from "./utils.js";
-import {Fibonacci} from "./classes/fibonacci.class.js";
+import {calculateFibonacci, handleClearResult} from "./utils.js";
 
 (() => {
     if (window.location.pathname === '/') {
-        const handleSubmitCalculate = () => {
-            if (NumberInputInstance.Range <= 0) {
-                alert("Range must be not empty and larger than 0")
+        const numberInput = new NumberInput()
+        const handleSubmit = async () => {
+            if (number_input.value !== '' && Number(number_input.value) > 0) {
+                numberInput.setRange(Number(Number(number_input.value).toFixed()))
+                const fibonaccis = fibonacciResult.querySelectorAll('.result-item')
+                if (fibonaccis.length) {
+                    handleClearResult(fibonacciResult, fibonaccis)
+                }
+                await calculateFibonacci(numberInput.Range)
+            } else {
+                alert("Input must be greater than 0 and not empty")
                 number_input.value = ''
                 number_input.focus()
             }
-            FibonacciInstance.reset()
-            const fibonacciResultItems = fibonacciResult.querySelectorAll('.result-item')
-            util.clearResult(fibonacciResult, fibonacciResultItems)
-            util.handleStartCalculate(NumberInputInstance.Range, FibonacciInstance)
         }
-        const util = new Util(eachFibonacci, fibonacciResult)
-        const NumberInputInstance = new NumberInput()
-        const FibonacciInstance = new Fibonacci()
-        number_input.addEventListener('change', (event) => {
-            util.handleChangeNumberInput(Number(Number(event.target.value).toFixed()), NumberInputInstance)
-            if (Number(event.target.value) !== Number(Number(event.target.value).toFixed())) {
-                number_input.value = NumberInputInstance.Range
-            }
-        })
-        number_input_submit.addEventListener('click', (_event) => {
-            handleSubmitCalculate()
-        })
-        number_input_clear.addEventListener('click', (_event) => {
-            const fibonacciResultItems = fibonacciResult.querySelectorAll('.result-item')
-            util.clearResult(fibonacciResult, fibonacciResultItems)
-            number_input.value = ''
-            number_input.focus()
-        })
-        window.addEventListener('keypress', (event) => {
-            if (event.key === 'Enter') {
-                handleSubmitCalculate()
-            }
-        })
-        number_input_form.addEventListener('submit', (event) => {
+        number_input_form.addEventListener('submit',async(event) => {
             event.preventDefault()
-            handleSubmitCalculate()
+            await handleSubmit()
+        })
+        number_input_submit.addEventListener('click',async (_event) => {
+            await handleSubmit()
+        })
+        number_input_clear.addEventListener('click', (event) => {
+            const fibonaccis = fibonacciResult.querySelectorAll('.result-item')
+            if (fibonaccis.length) {
+                handleClearResult(fibonacciResult, fibonaccis)
+                currentFibonacci.textContent = ''
+                number_input.value = ''
+                number_input.focus()
+                numberInput.reset()
+            }
         })
     }
 })()

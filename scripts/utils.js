@@ -1,57 +1,50 @@
-export class Util {
-    #eachFibonacciSpan
-    #fibonacciResult
+import {fibonacciResult, currentFibonacci, resultBoard} from "./constants.js";
 
-    constructor(eachFibonacciSpan, fibonacciResult) {
-        this.#eachFibonacciSpan = eachFibonacciSpan
-        this.#fibonacciResult = fibonacciResult
-    }
+const renderFibonacci = (fibonacciNumber, container) => {
+    const li = document.createElement('li')
+    li.classList.add(...['result-item', 'shadow-box', 'border-radius'])
+    const span = document.createElement('span')
+    span.textContent = fibonacciNumber.toString()
+    li.append(span)
+    container.append(li)
+}
 
-    handleChangeNumberInput(targetValue, instance) {
-        instance.setRange(targetValue)
-    }
-
-    #renderFibonacci(fibonacciNumber, container) {
-        const li = document.createElement('li')
-        li.classList.add(...['result-item', 'shadow-box', 'border-radius'])
-        const span = document.createElement('span')
-        span.textContent = fibonacciNumber.toString()
-        li.append(span)
-        container.append(li)
-    }
-
-    handleStartCalculate(range, fibonacci) {
-        if (range > 2) {
-            for (let i = 0; i < range - 2; i++) {
-                if (i === 0) {
-                    this.#renderFibonacci(fibonacci.beforeNumber, this.#fibonacciResult)
-                    this.#renderFibonacci(fibonacci.afterNumber, this.#fibonacciResult)
-                }
-                if (fibonacci.currentNumber === Infinity) {
-                    break
-                }
-                this.#renderFibonacci(fibonacci.currentNumber, this.#fibonacciResult)
-                this.#renderEachFibonacci(fibonacci.currentNumber, this.#eachFibonacciSpan)
-                fibonacci.pushFibonacciCollection(fibonacci.currentNumber)
-                fibonacci.beforeNumber = fibonacci.calculateNext(fibonacci.afterNumber, fibonacci.currentNumber)
-                fibonacci.afterNumber = fibonacci.currentNumber
-                fibonacci.currentNumber = fibonacci.beforeNumber
-            }
-        } else {
-            for (let i = 0; i < range; i++) {
-                this.#renderFibonacci(fibonacci.FibonacciCollection[i], this.#fibonacciResult)
-            }
-        }
-        fibonacci.reset()
-    }
-
-    clearResult(parent, childs) {
-        childs.forEach(child => {
-            parent.removeChild(child)
-        })
-    }
-
-    #renderEachFibonacci(fibonacci, target) {
-        target.textContent = fibonacci.toString()
+const timeoutRender = (ms) => {
+    let timeout, promise
+    promise = new Promise(resolve => {
+        timeout = setTimeout(resolve, ms)
+    })
+    return {
+        promise,
+        cancel: () => clearTimeout(timeout)
     }
 }
+
+const renderCurrentFibonacci = (fibonacciNumber, target) => {
+    target.textContent = fibonacciNumber
+}
+
+export const calculateFibonacci = async (range) => {
+    let before = 0, after = 1, next
+    for (let i = 1; i <= range; i++) {
+        const timeout = timeoutRender(i)
+        if (before === Infinity) {
+            break
+        }
+        await timeout.promise
+        renderFibonacci(before, fibonacciResult)
+        renderCurrentFibonacci(before, currentFibonacci)
+        resultBoard.scrollTo(0, resultBoard.scrollHeight)
+        next = before + after
+        before = after
+        after = next
+        timeout.cancel()
+    }
+}
+
+export const handleClearResult = (parent, childs) => {
+    childs.forEach(child => {
+        parent.removeChild(child)
+    })
+}
+
