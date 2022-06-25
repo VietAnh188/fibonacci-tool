@@ -10,4 +10,8 @@ export class NumberInput {
     setRange(numberUserInput) {
         this.#range = numberUserInput
     }
+
+    reset() {
+        this.#range = 0
+    }
 }
