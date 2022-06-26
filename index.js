@@ -8,43 +8,29 @@
 import express from 'express'
 import http from 'http'
 import dotenv from 'dotenv'
-dotenv.config()
 import path, {dirname} from 'path'
-import cluster from 'cluster'
-import process from 'process'
-import {cpus} from 'os'
 import homeRouter from './routes/home.router.js'
 import aboutRouter from './routes/about.router.js'
 import {fileURLToPath} from 'url'
 
+dotenv.config()
+
 ;(() => {
-    const CPUs = cpus().length
-    if (cluster.isPrimary) {
-        console.log(`Primary ${process.pid} is running`)
-        for (let i = 0; i < CPUs; i++) {
-            cluster.fork()
-        }
-        cluster.on('exit', (worker, _code, _signal) => {
-            console.log(`worker ${worker.process.pid} died`)
-        })
-    } else {
-        const __dirname = dirname(fileURLToPath(import.meta.url))
-        const app = express()
-        const httpServer = http.createServer(app)
+    const __dirname = dirname(fileURLToPath(import.meta.url))
+    const app = express()
+    const httpServer = http.createServer(app)
 
-        app.set("view engine", "ejs")
-        app.set("views", path.join(__dirname, "views"))
-        app.use(express.static(path.join(__dirname, "public")))
-        app.use("/scripts", express.static(path.join(__dirname, "scripts")))
+    app.set("view engine", "ejs")
+    app.set("views", path.join(__dirname, "views"))
+    app.use(express.static(path.join(__dirname, "public")))
+    app.use("/scripts", express.static(path.join(__dirname, "scripts")))
 
-        app.use(homeRouter.router)
-        app.use(aboutRouter.router)
+    app.use(homeRouter.router)
+    app.use(aboutRouter.router)
 
-        const port = process.env.PORT || 1808
+    const port = process.env.PORT || 1808
 
-        httpServer.listen(port, () => {
-            console.log(`Server in running in http://${process.env.HOST}:${port}`)
-        })
-        console.log(`Worker ${process.pid} started`)
-    }
+    httpServer.listen(port, () => {
+        console.log(`Server in running in http://${process.env.HOST}:${port}`)
+    })
 })()
