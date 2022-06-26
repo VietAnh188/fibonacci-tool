@@ -12,4 +12,5 @@ class AboutController {
     }
 }
 
-module.exports = AboutController
+// module.exports = AboutController
+export default AboutController
