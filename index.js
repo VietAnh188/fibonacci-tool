@@ -8,7 +8,7 @@
 import express from 'express'
 import http from 'http'
 import dotenv from 'dotenv'
-import path, {dirname} from 'path'
+import path from 'path'
 import homeRouter from './routes/home.router.js'
 import aboutRouter from './routes/about.router.js'
 import {fileURLToPath} from 'url'
@@ -16,7 +16,8 @@ import {fileURLToPath} from 'url'
 dotenv.config()
 
 ;(() => {
-    const __dirname = dirname(fileURLToPath(import.meta.url))
+    /** @type {string}*/
+    const __dirname = path.dirname(fileURLToPath(import.meta.url))
     const app = express()
     const httpServer = http.createServer(app)
 
@@ -28,7 +29,8 @@ dotenv.config()
     app.use(homeRouter.router)
     app.use(aboutRouter.router)
 
-    const port = process.env.PORT || 1808
+    /** @type {number}*/
+    const port = Number(process.env.PORT) || 1808
 
     httpServer.listen(port, () => {
         console.log(`Server in running in http://${process.env.HOST}:${port}`)

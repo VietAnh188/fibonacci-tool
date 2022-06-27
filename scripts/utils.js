@@ -1,16 +1,28 @@
 import {fibonacciResult, currentFibonacci, resultBoard} from "./constants.js";
 
-const renderFibonacci = (fibonacciNumber, container) => {
+/**
+ * @typedef {Function} FunctionRender
+ * @param {number} fibonacciNumber
+ * @param {Element} target
+ * @returns {void}
+ * */
+
+/** @type {FunctionRender}*/
+const renderFibonacci = (fibonacciNumber, target) => {
     const li = document.createElement('li')
     li.classList.add(...['result-item', 'shadow-box', 'border-radius'])
     const span = document.createElement('span')
     span.textContent = fibonacciNumber.toString()
     li.append(span)
-    container.append(li)
+    target.append(li)
 }
 
+/**
+ * @param ms {number}
+ * @returns {{promise: Promise, cancel: (function(): void)}}
+ * */
 const timeoutRender = (ms) => {
-    let timeout, promise
+    let /** @type {number}*/ timeout, /** @type {Promise}*/ promise
     promise = new Promise(resolve => {
         timeout = setTimeout(resolve, ms)
     })
@@ -20,11 +32,18 @@ const timeoutRender = (ms) => {
     }
 }
 
+/** @type {FunctionRender}*/
 const renderCurrentFibonacci = (fibonacciNumber, target) => {
-    target.textContent = fibonacciNumber
+    target.textContent = fibonacciNumber.toString()
 }
 
+/**
+ * @function
+ * @param {number} range
+ * @returns {Promise<void>}
+ * */
 export const calculateFibonacci = async (range) => {
+    /** @type {number}*/
     let before = 0, after = 1, next
     for (let i = 1; i <= range; i++) {
         const timeout = timeoutRender(i)
@@ -42,6 +61,11 @@ export const calculateFibonacci = async (range) => {
     }
 }
 
+/**
+ * @function
+ * @param {Element} parent
+ * @param {NodeListOf<Element>} childs
+ * */
 export const handleClearResult = (parent, childs) => {
     childs.forEach(child => {
         parent.removeChild(child)
